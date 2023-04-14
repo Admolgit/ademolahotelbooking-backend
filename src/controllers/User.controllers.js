@@ -46,7 +46,7 @@ const getUser = async (req, res, next) => {
 
   try {
 
-    const user = await Users.findById(id);
+    const user = await Users.findById({_id: id});
 
     res.status(200).json({
       message: 'User fetched successfully',
@@ -60,13 +60,13 @@ const getUser = async (req, res, next) => {
 
 const getUsers = async (req, res, next) => {
 
-  // const failed = true;
+  const failed = true;
 
-  // if(failed) return next(createError(401, 'Invalid request'));
+  if(failed) return next(createError(401, 'Invalid request'));
 
   try {
 
-    const users = await Users.find();
+    const users = await Users.find({});
 
     res.status(200).json({
       message: 'User fetched successfully',

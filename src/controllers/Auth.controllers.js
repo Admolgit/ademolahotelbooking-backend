@@ -5,12 +5,18 @@ const jwt = require('jsonwebtoken');
 
 const Register = async (req, res, next) => {
 
+  console.log(req.body)
+
   try {
     const newUser = new Users({
       user_name: req.body.user_name,
       email: req.body.email,
       password: req.body.password,
     });
+
+    const user = await Users.findOne({ email: req.body.email });
+
+    if(user) return next(createError(500, "This email already exists."));
 
     const newUserData = await newUser.save()
     
@@ -60,7 +66,10 @@ const Login = async (req, res, next) => {
 }
 
 const Logout = (req, res, next) => {
-  res.send('Looged User Out');
+  req.user.deleteToken(req.token,(err,user)=>{
+    if(err) return res.status(400).send(err);
+    res.sendStatus(200);
+  });
 }
 
 module.exports = {

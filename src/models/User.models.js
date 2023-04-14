@@ -48,7 +48,29 @@ UserSchema.pre("save", function (next) {
   } else {
     return next();
   }
-})
+});
+
+UserSchema.statics.findByToken=function(token,cb){
+  var user=this;
+
+  jwt.verify(token,confiq.SECRET,function(err,decode){
+      user.findOne({"_id": decode, "token":token},function(err,user){
+          if(err) return cb(err);
+          cb(null,user);
+      });
+  });
+  next()
+};
+
+UserSchema.methods.deleteToken=function(token,cb){
+  var user=this;
+
+  user.update({$unset : {token : 1}},function(err,user){
+      if(err) return cb(err);
+      cb(null,user);
+  });
+  next()
+}
 
 const Users = mongoose.model('users', UserSchema);
 
