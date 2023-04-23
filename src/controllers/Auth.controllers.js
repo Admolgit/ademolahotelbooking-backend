@@ -3,6 +3,8 @@ const createError = require('../utils/error.utils');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+
+// Register Route
 const Register = async (req, res, next) => {
 
   console.log(req.body)
@@ -29,6 +31,7 @@ const Register = async (req, res, next) => {
   }
 }
 
+// Login route
 const Login = async (req, res, next) => {
   try {
     const user = await Users.findOne({
@@ -65,6 +68,8 @@ const Login = async (req, res, next) => {
   }
 }
 
+
+// Logout route
 const Logout = (req, res, next) => {
   req.user.deleteToken(req.token,(err,user)=>{
     if(err) return res.status(400).send(err);

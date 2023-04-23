@@ -1,5 +1,5 @@
 const Hotels = require('../models/Hotels.models');
-const createError = require('../utils/error.utils');
+// const createError = require('../utils/error.utils');
 const Rooms = require('../models/Rooms.models')
 
 const createHotel = async (req, res) => {
@@ -100,8 +100,6 @@ const countByCity = async (req, res, next) => {
 
   const cities = req.query.cities.split(',');
 
-  console.log(req.query.cities)
-
   try {
 
     const cityCounts = await Promise.all(cities.map(city => {
@@ -115,7 +113,7 @@ const countByCity = async (req, res, next) => {
       cityCounts,
     });
   } catch (error) {
-    next(error)
+    next(error);
   };
 };
 
