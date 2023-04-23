@@ -13,7 +13,7 @@ module.exports.createRoom = async (req, res, next) => {
       const hotel = await Hotel.findByIdAndUpdate(id, {
         $push: { rooms: savedRoom.id },
       });
-      console.log(hotel)
+      
     } catch (err) {
       next(err);
     }
@@ -96,6 +96,7 @@ module.exports.getRoom = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports.getRooms = async (req, res, next) => {
   try {
     const rooms = await Rooms.find();
